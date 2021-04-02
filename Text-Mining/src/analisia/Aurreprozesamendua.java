@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
+import weka.filters.unsupervised.attribute.StringToWordVector;
+
 public class Aurreprozesamendua {
 	
 	public void arffFitxategia() throws IOException {
@@ -51,12 +56,33 @@ public class Aurreprozesamendua {
 		//PrintWriter pw = new PrintWriter(fw);
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public void errepresentazioBektoriala(Instances train, String path) throws Exception {
 		
-		Aurreprozesamendua pro = new Aurreprozesamendua();
-		pro.arffFitxategia();
+		StringToWordVector filter = new StringToWordVector();
+		filter.setWordsToKeep(100000);
+		filter.setAttributeNamePrefix("#");
+		//Defektuz 1000 proba egiteko
+    	filter.setInputFormat(train);
+    	Instances trainBektore=Filter.useFilter(train, filter);
+    	
+    	//Atributuak gorde
+    	FileWriter fw = new FileWriter(path);
+    	for(int i=1;i<trainBektore.numAttributes();i++) {
+    		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
+    	}
+    	fw.close();
+
+	}
+	
+	public Instances testaEgokitu(String path,Instances test) throws Exception {//**HIZTEGI EGOKIA SARTU**
 		
-		
+		FixedDictionaryStringToWordVector filter = new FixedDictionaryStringToWordVector();
+		filter.setDictionaryFile(new File(path));
+		filter.setAttributeNamePrefix("#");
+    	filter.setInputFormat(test);
+    	Instances testEgokituta=Filter.useFilter(test, filter);
+    	
+    	return testEgokituta;
 	}
 	
 }
