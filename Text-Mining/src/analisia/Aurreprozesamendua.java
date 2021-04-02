@@ -39,6 +39,7 @@ public class Aurreprozesamendua {
 		    	myReader = new Scanner(file);
 		        while (myReader.hasNextLine()) {
 		          String data = myReader.nextLine();
+		          data=data.replaceAll("'", " ");
 		          unekoText=unekoText.concat(data);
 		        }
 		        pw.println("'"+klasea+"'"+",'"+unekoText+"'");
