@@ -2,6 +2,7 @@ package analisia;
 
 import java.io.IOException;
 
+import weka.attributeSelection.ClassifierAttributeEval;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -30,7 +31,10 @@ public class Analisia {
 		//MIKEL
 		pro.arffFitxategia();
 		//ADRIÁN
-		pro.errepresentazioBektoriala(train, "/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff");
+		Instances trainBektore=pro.errepresentazioBektoriala(train, "/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff");
+		System.out.println(trainBektore.numAttributes()+"##"+trainBektore.classIndex()+"##"+trainBektore.classAttribute().name());
+		Instances trainASBektore = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 4000);
+		System.out.println(trainASBektore.numAttributes()+"##"+trainASBektore.classIndex()+"##"+trainASBektore.classAttribute().name());
 		Instances testEgokituta = pro.testaEgokitu("/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff", test);
 		System.out.println(testEgokituta.numAttributes());
 		

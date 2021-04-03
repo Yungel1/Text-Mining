@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import weka.attributeSelection.ASEvaluation;
+import weka.attributeSelection.ASSearch;
+import weka.attributeSelection.Ranker;
 import weka.core.Instances;
 import weka.filters.Filter;
+import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 
@@ -56,7 +60,7 @@ public class Aurreprozesamendua {
 		//PrintWriter pw = new PrintWriter(fw);
 	}
 	
-	public void errepresentazioBektoriala(Instances train, String path) throws Exception {
+	public Instances errepresentazioBektoriala(Instances train, String path) throws Exception {
 		
 		StringToWordVector filter = new StringToWordVector();
 		filter.setWordsToKeep(100000);
@@ -66,12 +70,27 @@ public class Aurreprozesamendua {
     	Instances trainBektore=Filter.useFilter(train, filter);
     	
     	//Atributuak gorde
-    	FileWriter fw = new FileWriter(path);
+    	/*FileWriter fw = new FileWriter(path);
     	for(int i=1;i<trainBektore.numAttributes();i++) {
     		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
     	}
-    	fw.close();
+    	fw.close();*/
+    	return trainBektore;
 
+	}
+	
+	public Instances attributeSelection(Instances data,ASEvaluation evaluator,int attKop) throws Exception {
+		
+		AttributeSelection as = new AttributeSelection();
+		Ranker ranker = new Ranker();
+		ranker.setNumToSelect(attKop);
+		as.setEvaluator(evaluator);
+		as.setSearch(ranker);
+		as.setInputFormat(data);
+		
+		Instances ins = Filter.useFilter(data, as);
+		
+		return ins;
 	}
 	
 	public Instances testaEgokitu(String path,Instances test) throws Exception {//**HIZTEGI EGOKIA SARTU**
