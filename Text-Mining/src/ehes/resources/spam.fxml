@@ -13,7 +13,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="450.0" prefWidth="715.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextArea fx:id="txtDetector" layoutX="36.0" layoutY="79.0" prefHeight="498.0" prefWidth="421.0" />
+            <TextArea fx:id="txtDetector" layoutX="36.0" layoutY="79.0" prefHeight="498.0" prefWidth="421.0" wrapText="true" />
             <Label layoutX="144.0" layoutY="29.0" text="SPAM DETECTOR">
                <font>
                   <Font name="Abyssinica SIL" size="25.0" />
@@ -24,7 +24,7 @@
                   <Font name="Abyssinica SIL" size="13.0" />
                </font>
             </Button>
-            <Label layoutX="634.0" layoutY="135.0" text="RESULT">
+            <Label layoutX="645.0" layoutY="135.0" text="RESULT">
                <font>
                   <Font name="Abyssinica SIL" size="25.0" />
                </font>
@@ -34,27 +34,27 @@
                   <Font name="Abyssinica SIL" size="43.0" />
                </font>
             </TextField>
-            <Label layoutX="565.0" layoutY="291.0" text="ADVANCED RESULTS">
+            <Label layoutX="531.0" layoutY="291.0" text="CLASSIFIER INFORMATION">
                <font>
                   <Font name="Abyssinica SIL" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="txtSpam" alignment="CENTER" editable="false" layoutX="717.0" layoutY="358.0" prefHeight="26.0" prefWidth="74.0">
+            <TextField alignment="CENTER" editable="false" layoutX="717.0" layoutY="358.0" prefHeight="26.0" prefWidth="74.0">
                <font>
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="597.0" layoutY="366.0" text="SPAM %">
+            <Label layoutX="585.0" layoutY="366.0" text="ACCURACY">
                <font>
                   <Font name="Abyssinica SIL" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="579.0" layoutY="436.0" text="NO SPAM %">
+            <Label layoutX="618.0" layoutY="436.0" text="ETC">
                <font>
                   <Font name="Abyssinica SIL" size="19.0" />
                </font>
             </Label>
-            <TextField fx:id="txtNoSpam" alignment="CENTER" editable="false" layoutX="717.0" layoutY="428.0" prefHeight="26.0" prefWidth="74.0">
+            <TextField alignment="CENTER" editable="false" layoutX="717.0" layoutY="428.0" prefHeight="26.0" prefWidth="74.0">
                <font>
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
