@@ -4,16 +4,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 
 import weka.attributeSelection.ASEvaluation;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.Ranker;
 import weka.core.Instances;
+import weka.core.tokenizers.WordTokenizer;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
 import weka.filters.unsupervised.attribute.StringToWordVector;
+import weka.filters.unsupervised.instance.RemovePercentage;
 
 public class Aurreprozesamendua {
 	
@@ -63,18 +66,41 @@ public class Aurreprozesamendua {
 	public Instances errepresentazioBektoriala(Instances train, String path) throws Exception {
 		
 		StringToWordVector filter = new StringToWordVector();
-		filter.setWordsToKeep(100000);
+		filter.setWordsToKeep(1000);
 		filter.setAttributeNamePrefix("#");
+
 		//Defektuz 1000 proba egiteko
     	filter.setInputFormat(train);
     	Instances trainBektore=Filter.useFilter(train, filter);
     	
     	//Atributuak gorde
-    	/*FileWriter fw = new FileWriter(path);
-    	for(int i=1;i<trainBektore.numAttributes();i++) {
+    	FileWriter fw = new FileWriter(path);
+    	for(int i=0;i<trainBektore.numAttributes();i++) {
     		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
     	}
-    	fw.close();*/
+    	System.out.println(trainBektore.numAttributes());
+    	fw.close();
+    	return trainBektore;
+
+	}
+	
+public Instances errepresentazioBektorialaTF(Instances train, String path) throws Exception {
+		
+		StringToWordVector filter = new StringToWordVector();
+		filter.setWordsToKeep(1000);
+		filter.setAttributeNamePrefix("#");
+		filter.setTFTransform(true);
+		//Defektuz 1000 proba egiteko
+    	filter.setInputFormat(train);
+    	Instances trainBektore=Filter.useFilter(train, filter);
+    	
+    	//Atributuak gorde
+    	FileWriter fw = new FileWriter(path);
+    	for(int i=0;i<trainBektore.numAttributes();i++) {
+    		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
+    	}
+    	System.out.println(trainBektore.numAttributes());
+    	fw.close();
     	return trainBektore;
 
 	}
@@ -104,4 +130,17 @@ public class Aurreprozesamendua {
     	return testEgokituta;
 	}
 	
+	public Instances[] randomSplit(Instances data,int rand) throws Exception {
+		data.randomize(new Random(rand));
+		RemovePercentage filter = new RemovePercentage();
+		filter.setInputFormat(data);
+		filter.setInvertSelection(true);
+		filter.setPercentage(70);
+		Instances train = Filter.useFilter(data, filter);
+		filter.setInputFormat(data);
+		filter.setInvertSelection(false);
+		Instances test = Filter.useFilter(data, filter);
+		Instances [] emaitza= {train,test};
+		return emaitza;
+	}
 }

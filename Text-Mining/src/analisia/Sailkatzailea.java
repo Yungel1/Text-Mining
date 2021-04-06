@@ -17,7 +17,7 @@ public class Sailkatzailea {
 	}
 	
 	public Evaluation ebaluatu(Instances test, Instances train, Classifier cls) throws Exception {
-		Evaluation e = new Evaluation(test);
+		Evaluation e = new Evaluation(train);
 		e.evaluateModel(cls, test);
 		return e;
 	}
@@ -29,4 +29,24 @@ public class Sailkatzailea {
 		return e;
 		
 	}
+	public  void calculateSD(double numArray[])
+    {
+        double sum = 0.0;
+        double standardDeviation = 0.0;
+        int length = numArray.length;
+
+        for(double num : numArray) {
+            sum += num;
+        }
+
+        double mean = sum/length;
+        System.out.println(mean);
+
+        for(double num: numArray) {
+            standardDeviation += Math.pow(num - mean, 2);
+        }
+
+        System.out.println(Math.sqrt(standardDeviation/length));
+    }
 }
+
