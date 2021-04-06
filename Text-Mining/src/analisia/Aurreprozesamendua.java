@@ -4,17 +4,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
 import weka.attributeSelection.ASEvaluation;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.Ranker;
+import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.tokenizers.WordTokenizer;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
+import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.filters.unsupervised.instance.RemovePercentage;
 
@@ -65,43 +69,48 @@ public class Aurreprozesamendua {
 	
 	public Instances errepresentazioBektoriala(Instances train, String path) throws Exception {
 		
+		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
+		filter.setDictionaryFileToSaveTo(f);
 		filter.setWordsToKeep(1000);
 		filter.setAttributeNamePrefix("#");
 
 		//Defektuz 1000 proba egiteko
     	filter.setInputFormat(train);
     	Instances trainBektore=Filter.useFilter(train, filter);
-    	
     	//Atributuak gorde
-    	FileWriter fw = new FileWriter(path);
+    	/*FileWriter fw = new FileWriter(path);
     	for(int i=0;i<trainBektore.numAttributes();i++) {
     		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
     	}
     	System.out.println(trainBektore.numAttributes());
-    	fw.close();
+    	fw.close();*/
+    	System.out.println(trainBektore.numAttributes());
     	return trainBektore;
 
 	}
 	
-public Instances errepresentazioBektorialaTF(Instances train, String path) throws Exception {
+	public Instances errepresentazioBektorialaTF(Instances train, String path) throws Exception {
 		
+		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
+		filter.setDictionaryFileToSaveTo(f);
 		filter.setWordsToKeep(1000);
-		filter.setAttributeNamePrefix("#");
 		filter.setTFTransform(true);
+		filter.setAttributeNamePrefix("#");
+
 		//Defektuz 1000 proba egiteko
-    	filter.setInputFormat(train);
-    	Instances trainBektore=Filter.useFilter(train, filter);
-    	
-    	//Atributuak gorde
-    	FileWriter fw = new FileWriter(path);
-    	for(int i=0;i<trainBektore.numAttributes();i++) {
-    		fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
-    	}
-    	System.out.println(trainBektore.numAttributes());
-    	fw.close();
-    	return trainBektore;
+		filter.setInputFormat(train);
+		Instances trainBektore=Filter.useFilter(train, filter);
+		//Atributuak gorde
+		/*FileWriter fw = new FileWriter(path);
+		for(int i=0;i<trainBektore.numAttributes();i++) {
+			fw.write(trainBektore.attribute(i).name().substring(1)+"\n");
+		}
+		System.out.println(trainBektore.numAttributes());
+		fw.close();*/
+		System.out.println(trainBektore.numAttributes());
+		return trainBektore;
 
 	}
 	
@@ -116,7 +125,47 @@ public Instances errepresentazioBektorialaTF(Instances train, String path) throw
 		
 		Instances ins = Filter.useFilter(data, as);
 		
+		Instances insOrd = egokitu(ins,data);
+		
+		return insOrd;
+	}
+	
+	public Instances egokitu(Instances train, Instances test) throws Exception {
+		
+		ArrayList<Integer> ind = new ArrayList<Integer>();
+		ArrayList<Attribute> list = Collections.list(train.enumerateAttributes());
+		list.add(train.classAttribute());
+		
+		if(!test.equalHeaders(train)) {
+			for(int i=0;i<test.numAttributes();i++) {
+				if(list.contains(test.attribute(i))) {
+					ind.add(i);
+				}
+			}
+			
+			int[] indArray = new int[ind.size()];
+			for(int a=0;a<ind.size();a++) {
+				indArray[a]=ind.get(a);
+			}
+			test = this.remove(test,indArray);
+			
+		}
+		
+		return test;
+	}
+	
+	public Instances remove(Instances data,int[] aukAtt) throws Exception {
+		
+		Remove r = new Remove();
+		r.setAttributeIndicesArray(aukAtt);
+		r.setInvertSelection(true);
+		r.setInputFormat(data);
+		
+		Instances ins = Filter.useFilter(data, r);
+		
 		return ins;
+		
+		
 	}
 	
 	public Instances testaEgokitu(String path,Instances test) throws Exception {//**HIZTEGI EGOKIA SARTU**
