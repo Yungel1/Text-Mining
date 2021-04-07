@@ -72,7 +72,7 @@ public class Aurreprozesamendua {
 		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
 		filter.setDictionaryFileToSaveTo(f);
-		filter.setWordsToKeep(100000);
+		filter.setWordsToKeep(1000);
 		filter.setAttributeNamePrefix("#");
 
 		//Defektuz 1000 proba egiteko
@@ -95,7 +95,7 @@ public class Aurreprozesamendua {
 		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
 		filter.setDictionaryFileToSaveTo(f);
-		filter.setWordsToKeep(100000);
+		filter.setWordsToKeep(1000);
 		filter.setTFTransform(true);
 		filter.setAttributeNamePrefix("#");
 

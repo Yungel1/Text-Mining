@@ -128,7 +128,49 @@ public class Analisia {
 		
 	}
 	
-	private void svmEkorketa() {
+	private void svmEkorketa() throws Exception {
+		
+		Aurreprozesamendua pro = new Aurreprozesamendua();
+		Sailkatzailea sail = new Sailkatzailea();
+		
+		Instances [] trainTest = pro.randomSplit(data, 1);
+		Instances trainBektore = pro.errepresentazioBektoriala(trainTest[0],"src/analisia/Arff fitxategia/dictionary.txt");
+		Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	
+		
+		Instances trainAS = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 1000);
+		Instances testAS = pro.egokitu(trainAS, testBektore);
+		
+		double[] balioak = new double[] {0.001,0.01,0.1,1,10,100};
+		double c;
+		double g;
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Aukeratu Kernela: ");
+		System.out.println("1. Linear");
+		System.out.println("2. RBF");
+		
+		int aukera = sc.nextInt();
+		
+		for(int i=0;i<balioak.length;i++) {
+			c=balioak[i];
+			if(aukera==1) {
+				SMO svm = sail.entrenatuSVM(trainAS, c, -1, aukera);
+				Evaluation evaluation = sail.ebaluatu(testAS,trainAS,svm);
+				System.out.println(evaluation.pctCorrect());
+			}
+			else {
+				for(int j=0;j<balioak.length;j++) {
+					g=balioak[j];
+					SMO svm = sail.entrenatuSVM(trainAS, c, g, aukera);
+					Evaluation evaluation = sail.ebaluatu(testAS,trainAS,svm);
+					System.out.println("--->"+evaluation.pctCorrect());
+				}
+			}
+		}
+		
+		
+		
 		
 	}
 

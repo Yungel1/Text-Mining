@@ -9,6 +9,7 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.SMO;
 import weka.classifiers.functions.supportVector.Kernel;
+import weka.classifiers.functions.supportVector.PolyKernel;
 import weka.classifiers.functions.supportVector.RBFKernel;
 import weka.core.Instances;
 import weka.core.Option;
@@ -55,7 +56,7 @@ public class Sailkatzailea {
         System.out.println(Math.sqrt(standardDeviation/length));
     }
 	
-	public double[] ekortuSVM(Instances data) throws Exception {
+	/*public double[] ekortuSVM(Instances data) throws Exception {
 		
 		SMO svm = new SMO();
 		svm.buildClassifier(data);
@@ -101,17 +102,31 @@ public class Sailkatzailea {
 		emaitza[1]=gamma;
 		
 		return emaitza;
-	}
+	}*/
 	
-	public SMO entrenatuSVM(Instances data, double C, double gamma) throws Exception {
+	public SMO entrenatuSVM(Instances data, double c, double gamma, int aukera) throws Exception {
 		
 		
 		SMO svm = new SMO();
+		System.out.println("#####Entrenamendua#####");
+		if(aukera==1) {
+			System.out.println("---> Kernel lineala");
+			PolyKernel kernel = new PolyKernel();
+			svm.setKernel(kernel);
+			
+		}
+		else {
+			System.out.println("---> RBF Kernela");
+			System.out.println("---> Gamma = "+gamma);
+			RBFKernel kernel = new RBFKernel();
+			kernel.setGamma(gamma);
+			svm.setKernel(kernel);
+		}
+		System.out.println("---> C = "+c);
+		
+		svm.setC(c);
+		
 		svm.buildClassifier(data);
-		svm.setC(C);
-		RBFKernel kernel = new RBFKernel();
-		kernel.setGamma(gamma);
-		svm.setKernel(kernel);
 		return svm;
 		
 	}
