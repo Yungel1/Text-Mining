@@ -110,18 +110,19 @@ public class Analisia {
 		int attKop;
 		ASEvaluation eval;
 
-		Instances [] trainTest = pro.randomSplit(data, 1);
-		Instances trainBektore = pro.errepresentazioBektoriala(trainTest[0],"src/analisia/Arff fitxategia/dictionary.txt");
-		Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	
+		//Instances [] trainTest = pro.randomSplit(data, 1);
+		Instances trainBektore = pro.errepresentazioBektoriala(data,"src/analisia/Arff fitxategia/dictionary.txt");
+		//Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	
 		
 		for(int i=0;i<evAttList.size();i++) {
 			eval = evAttList.get(i);
 			for(int j=0;j<attKopList.length;j++) {
 				attKop = attKopList[j];
 				Instances trainAS = pro.attributeSelection(trainBektore, eval, attKop);
-				Instances testAS = pro.egokitu(trainAS, testBektore);
-				Logistic lo = sail.logisticEntrenatu(trainAS);
-				Evaluation evaluation = sail.ebaluatu(testAS,trainAS,lo);
+				//Instances testAS = pro.egokitu(trainAS, testBektore);
+				//Logistic lo = sail.logisticEntrenatu(trainAS);
+
+				Evaluation evaluation = sail.ebaluatuCrossVal(trainAS,new Logistic(),3,new Random(1));
 				System.out.println(evaluation.pctCorrect());
 			}
 		}
