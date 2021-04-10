@@ -72,7 +72,7 @@ public class Aurreprozesamendua {
 		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
 		filter.setDictionaryFileToSaveTo(f);
-		filter.setWordsToKeep(1000);
+		filter.setWordsToKeep(100000);
 		filter.setAttributeNamePrefix("#");
 
 		//Defektuz 1000 proba egiteko
@@ -90,13 +90,13 @@ public class Aurreprozesamendua {
 
 	}
 	
-	public Instances errepresentazioBektorialaTF(Instances train, String path) throws Exception {
+	public Instances errepresentazioBektorialaTFIDF(Instances train, String path) throws Exception {
 		
 		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
 		filter.setDictionaryFileToSaveTo(f);
-		filter.setWordsToKeep(1000);
-		filter.setTFTransform(true);
+		filter.setWordsToKeep(10000);
+		filter.setIDFTransform(true);
 		filter.setAttributeNamePrefix("#");
 
 		//Defektuz 1000 proba egiteko

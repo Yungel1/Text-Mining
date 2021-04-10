@@ -19,6 +19,7 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.SMO;
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemovePercentage;
@@ -53,11 +54,92 @@ public class Analisia {
         return data;
 	}
 	
+	private void bowtfRS() throws Exception {
+		
+		Aurreprozesamendua pro = new Aurreprozesamendua();
+		Sailkatzailea sail = new Sailkatzailea();
+		Instances trainBektore = pro.errepresentazioBektoriala(data,"src/analisia/Arff fitxategia/dictionary.txt");
+		
+		Logistic lo = sail.logisticEntrenatu(trainBektore);
+		Evaluation eval= sail.ebaluatu(trainBektore,trainBektore, lo);
+	
+		System.out.println("@@@@@@BOW");
+		
+		System.out.println("Accuracy: ");
+		System.out.println(eval.pctCorrect());
+		
+		System.out.println("WPrecision: ");
+		System.out.println(eval.weightedPrecision());
+		System.out.println("WRecall: ");
+		System.out.println(eval.weightedRecall());
+		System.out.println("WFM: ");
+		System.out.println(eval.weightedFMeasure());
+		
+		System.out.println("P S: ");
+		System.out.println(eval.precision(1));
+		System.out.println("R S: ");
+		System.out.println(eval.recall(1));
+		System.out.println("FM S: ");
+		System.out.println(eval.fMeasure(1));
+		
+		System.out.println("P H: ");
+		System.out.println(eval.precision(0));
+		System.out.println("R H: ");
+		System.out.println(eval.recall(0));
+		System.out.println("FM H: ");
+		System.out.println(eval.fMeasure(0));
+		
+		System.out.println("@@@@@@TFIDF");
+		
+		trainBektore = pro.errepresentazioBektorialaTFIDF(data,"src/analisia/Arff fitxategia/dictionary.txt");
+		
+		Logistic lo1 = sail.logisticEntrenatu(trainBektore);
+		Evaluation eval1= sail.ebaluatu(trainBektore,trainBektore, lo1);
+		
+		System.out.println("Accuracy: ");
+		System.out.println(eval1.pctCorrect());
+		
+		System.out.println("WPrecision: ");
+		System.out.println(eval1.weightedPrecision());
+		System.out.println("WRecall: ");
+		System.out.println(eval1.weightedRecall());
+		System.out.println("WFM: ");
+		System.out.println(eval1.weightedFMeasure());
+		
+		System.out.println("P S: ");
+		System.out.println(eval1.precision(1));
+		System.out.println("R S: ");
+		System.out.println(eval1.recall(1));
+		System.out.println("FM S: ");
+		System.out.println(eval1.fMeasure(1));
+		
+		System.out.println("P H: ");
+		System.out.println(eval1.precision(0));
+		System.out.println("R H: ");
+		System.out.println(eval1.recall(0));
+		System.out.println("FM H: ");
+		System.out.println(eval1.fMeasure(0));
+		
+	}
+	
 	private void bowtf() throws Exception {
 		
 		Aurreprozesamendua pro = new Aurreprozesamendua();
 		Sailkatzailea sail = new Sailkatzailea();
-		double[] numArray= new double[5];
+		double[] accArray= new double[5];
+		
+		double[] wPArray= new double[5];
+		double[] wRArray= new double[5];
+		double[] wFMArray= new double[5];
+		
+		double[] pSArray= new double[5];
+		double[] rSArray= new double[5];
+		double[] fmSArray= new double[5];
+		
+		double[] pHArray= new double[5];
+		double[] rHArray= new double[5];
+		double[] fmHArray= new double[5];
+		
 		
 		for(int i=0;i<5;i++) {
 			Instances [] trainTest = pro.randomSplit(data, i);
@@ -66,22 +148,94 @@ public class Analisia {
 			//entrenamedu
 			Logistic lo = sail.logisticEntrenatu(trainBektore);
 			Evaluation eval= sail.ebaluatu(testBektore,trainBektore, lo);
-			System.out.println(eval.pctCorrect());
-			numArray[i]=eval.pctCorrect();
+		
+			accArray[i]=eval.pctCorrect();
+			
+			wPArray[i] = eval.weightedPrecision();
+			wRArray[i] = eval.weightedRecall();
+			wFMArray[i] = eval.weightedFMeasure();
+			
+			pSArray[i] = eval.precision(1);
+			rSArray[i] = eval.recall(1);
+			fmSArray[i] = eval.fMeasure(1);
+			
+			pHArray[i] = eval.precision(0);
+			rHArray[i] = eval.recall(0);
+			fmHArray[i] = eval.fMeasure(0);
+
 		}
-		sail.calculateSD(numArray);
+		System.out.println("#######BOW#######");
+		System.out.println("Accuracy: ");
+		sail.calculateSD(accArray);
+		
+		System.out.println("Weighted Precision: ");
+		sail.calculateSD(wPArray);
+		System.out.println("Weighted Recall: ");
+		sail.calculateSD(wRArray);
+		System.out.println("Weighted FM: ");
+		sail.calculateSD(wFMArray);
+		
+		System.out.println("Precision SPAM: ");
+		sail.calculateSD(pSArray);
+		System.out.println("Recall SPAM: ");
+		sail.calculateSD(rSArray);
+		System.out.println("FM SPAM: ");
+		sail.calculateSD(fmSArray);
+		
+		System.out.println("Precision HAM: ");
+		sail.calculateSD(pHArray);
+		System.out.println("Recall HAM: ");
+		sail.calculateSD(rHArray);
+		System.out.println("FM HAM: ");
+		sail.calculateSD(fmHArray);
 		
 		for(int i=0;i<5;i++) {
 			Instances [] trainTest = pro.randomSplit(data, i);
-			Instances trainBektore = pro.errepresentazioBektorialaTF(trainTest[0],"src/analisia/Arff fitxategia/dictionary.txt");
+			Instances trainBektore = pro.errepresentazioBektorialaTFIDF(trainTest[0],"src/analisia/Arff fitxategia/dictionary.txt");
 			Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	
 			//entrenamedu
 			Logistic lo = sail.logisticEntrenatu(trainBektore);
 			Evaluation eval= sail.ebaluatu(testBektore,trainBektore, lo);
-			System.out.println(eval.pctCorrect());
-			numArray[i]=eval.pctCorrect();
+
+			accArray[i]=eval.pctCorrect();
+			
+			wPArray[i] = eval.weightedPrecision();
+			wRArray[i] = eval.weightedRecall();
+			wFMArray[i] = eval.weightedFMeasure();
+			
+			pSArray[i] = eval.precision(1);
+			rSArray[i] = eval.recall(1);
+			fmSArray[i] = eval.fMeasure(1);
+			
+			pHArray[i] = eval.precision(0);
+			rHArray[i] = eval.recall(0);
+			fmHArray[i] = eval.fMeasure(0);
+
 		}
-		sail.calculateSD(numArray);
+		System.out.println("#######TF-IDF#######");
+		System.out.println("Accuracy: ");
+		sail.calculateSD(accArray);
+		
+		System.out.println("Weighted Precision: ");
+		sail.calculateSD(wPArray);
+		System.out.println("Weighted Recall: ");
+		sail.calculateSD(wRArray);
+		System.out.println("Weighted FM: ");
+		sail.calculateSD(wFMArray);
+		
+		System.out.println("Precision SPAM: ");
+		sail.calculateSD(pSArray);
+		System.out.println("Recall SPAM: ");
+		sail.calculateSD(rSArray);
+		System.out.println("FM SPAM: ");
+		sail.calculateSD(fmSArray);
+		
+		System.out.println("Precision HAM: ");
+		sail.calculateSD(pHArray);
+		System.out.println("Recall HAM: ");
+		sail.calculateSD(rHArray);
+		System.out.println("FM HAM: ");
+		sail.calculateSD(fmHArray);
 	}
 	
 	private void attSelFroga() throws Exception {
@@ -91,18 +245,18 @@ public class Analisia {
 		
 		ArrayList<ASEvaluation> evAttList = new ArrayList<ASEvaluation>();
 		
-		evAttList.add(new ClassifierAttributeEval());
-		evAttList.add(new CorrelationAttributeEval());
+		//evAttList.add(new ClassifierAttributeEval());
+		//evAttList.add(new CorrelationAttributeEval());
 		evAttList.add(new GainRatioAttributeEval());
-		evAttList.add(new InfoGainAttributeEval());
-		evAttList.add(new OneRAttributeEval());
-		evAttList.add(new ReliefFAttributeEval());
-		evAttList.add(new SymmetricalUncertAttributeEval());
+		//evAttList.add(new InfoGainAttributeEval());
+		//evAttList.add(new OneRAttributeEval());
+		//evAttList.add(new ReliefFAttributeEval());
+		//evAttList.add(new SymmetricalUncertAttributeEval());
 		
 		int[] attKopList = new int[1];
-		attKopList[0] = 500;
-		/*attKopList[1] = 6000;
-		attKopList[2] = 7000;
+		//attKopList[0] = 5000;
+		attKopList[0] = 5500;
+		/*attKopList[2] = 6000;
 		attKopList[3] = 8000;
 		attKopList[4] = 9000;
 		attKopList[5] = 10000;*/
@@ -119,11 +273,39 @@ public class Analisia {
 			for(int j=0;j<attKopList.length;j++) {
 				attKop = attKopList[j];
 				Instances trainAS = pro.attributeSelection(trainBektore, eval, attKop);
+				System.out.println("Instantziak gordetzen...");
+				ArffSaver s= new ArffSaver();
+				s.setInstances(trainAS);
+				s.setFile(new File("src/analisia/Arff fitxategia/trainAS.arff"));
+				s.writeBatch();
 				//Instances testAS = pro.egokitu(trainAS, testBektore);
 				//Logistic lo = sail.logisticEntrenatu(trainAS);
 
 				Evaluation evaluation = sail.ebaluatuCrossVal(trainAS,new Logistic(),3,new Random(1));
+				
+				System.out.println("Accuracy: ");
 				System.out.println(evaluation.pctCorrect());
+				
+				System.out.println("WPrecision: ");
+				System.out.println(evaluation.weightedPrecision());
+				System.out.println("WRecall: ");
+				System.out.println(evaluation.weightedRecall());
+				System.out.println("WFM: ");
+				System.out.println(evaluation.weightedFMeasure());
+				
+				System.out.println("P S: ");
+				System.out.println(evaluation.precision(1));
+				System.out.println("R S: ");
+				System.out.println(evaluation.recall(1));
+				System.out.println("FM S: ");
+				System.out.println(evaluation.fMeasure(1));
+				
+				System.out.println("P H: ");
+				System.out.println(evaluation.precision(0));
+				System.out.println("R H: ");
+				System.out.println(evaluation.recall(0));
+				System.out.println("FM H: ");
+				System.out.println(evaluation.fMeasure(0));
 			}
 		}
 		

@@ -37,8 +37,10 @@ public class Controller implements Initializable{
     @FXML
     void onClick(ActionEvent event) throws Exception {
 
-    	//txtDetector --> .txt
-    	//Aurreprozesamendua.java egin eta hau erabiliz .txt --> .arff bihurtu eta FixedDictionary aplikatu
+    	AurreprozesamenduaTest ap = new AurreprozesamenduaTest();
+    	
+    	String msg = txtDetector.getText(); //txtDetector --> String
+    	test = ap.testaEgokitu(msg);//Aurreprozesamendua.java egin eta hau erabiliz string --> .arff bihurtu eta FixedDictionary aplikatu
     	iragarpenaEgin();
     }
 
@@ -50,14 +52,10 @@ public class Controller implements Initializable{
     private void iragarpenaEgin() throws Exception {
     	
     	 cls = (Classifier) weka.core.SerializationHelper.read("resources/spam.model");
-    	 
-    	 DataSource source = new DataSource("resources/header.arff");
-         Instances header = source.getDataSet();
-         header.setClassIndex(header.numAttributes() - 1);
          
          double pred = cls.classifyInstance(test.instance(0));
-         txtResult.setText(test.classAttribute().value((int) pred));
-    	 
+         txtResult.setText(test.classAttribute().value((int) pred).toUpperCase());
+         
     }
 
 	@Override
