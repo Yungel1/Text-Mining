@@ -51,7 +51,7 @@ public class Controller implements Initializable{
     
     private void iragarpenaEgin() throws Exception {
     	
-    	 cls = (Classifier) weka.core.SerializationHelper.read("resources/spam.model");
+    	 cls = (Classifier) weka.core.SerializationHelper.read("src/ehes/resources/spam.model");
          
          double pred = cls.classifyInstance(test.instance(0));
          txtResult.setText(test.classAttribute().value((int) pred).toUpperCase());

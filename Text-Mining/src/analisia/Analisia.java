@@ -253,9 +253,9 @@ public class Analisia {
 		//evAttList.add(new ReliefFAttributeEval());
 		//evAttList.add(new SymmetricalUncertAttributeEval());
 		
-		int[] attKopList = new int[1];
-		//attKopList[0] = 5000;
-		attKopList[0] = 5500;
+		int[] attKopList = new int[2];
+		attKopList[0] = 5000;
+		attKopList[1] = 6000;
 		/*attKopList[2] = 6000;
 		attKopList[3] = 8000;
 		attKopList[4] = 9000;
@@ -274,10 +274,10 @@ public class Analisia {
 				attKop = attKopList[j];
 				Instances trainAS = pro.attributeSelection(trainBektore, eval, attKop);
 				System.out.println("Instantziak gordetzen...");
-				ArffSaver s= new ArffSaver();
+				/*ArffSaver s= new ArffSaver();
 				s.setInstances(trainAS);
 				s.setFile(new File("src/analisia/Arff fitxategia/trainAS.arff"));
-				s.writeBatch();
+				s.writeBatch();*/
 				//Instances testAS = pro.egokitu(trainAS, testBektore);
 				//Logistic lo = sail.logisticEntrenatu(trainAS);
 
@@ -316,14 +316,19 @@ public class Analisia {
 		Aurreprozesamendua pro = new Aurreprozesamendua();
 		Sailkatzailea sail = new Sailkatzailea();
 		
-		Instances [] trainTest = pro.randomSplit(data, 1);
+		/*Instances [] trainTest = pro.randomSplit(data, 1);
 		Instances trainBektore = pro.errepresentazioBektoriala(trainTest[0],"src/analisia/Arff fitxategia/dictionary.txt");
-		Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	
+		Instances testBektore = pro.testaEgokitu("src/analisia/Arff fitxategia/dictionary.txt", trainTest[1]);	*/
 		
-		Instances trainAS = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 1000);
-		Instances testAS = pro.egokitu(trainAS, testBektore);
+		//Instances trainAS = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 1000);
+		//Instances testAS = pro.egokitu(trainAS, testBektore);
 		
-		double[] balioak = new double[] {0.001,0.01,0.1,1,10,100};
+		DataSource source = new DataSource("src/analisia/Arff fitxategia/trainAS.arff");
+		Instances trainAS = source.getDataSet();
+		trainAS.setClassIndex(0);
+		
+		double[] balioakC = new double[] {1.0};
+		double[] balioakG = new double[] {1.0};
 		double c;
 		double g;
 		
@@ -335,19 +340,72 @@ public class Analisia {
 		
 		int aukera = sc.nextInt();
 		
-		for(int i=0;i<balioak.length;i++) {
-			c=balioak[i];
+		Evaluation evaluation;
+		
+		for(int i=0;i<balioakC.length;i++) {
+			c=balioakC[i];
 			if(aukera==1) {
-				SMO svm = sail.entrenatuSVM(trainAS, c, -1, aukera);
-				Evaluation evaluation = sail.ebaluatu(testAS,trainAS,svm);
+				SMO svm = sail.sortuSVM(c, -1, aukera);
+				evaluation = sail.ebaluatuCrossVal(trainAS,svm,3,new Random(1));
+				
+				System.out.println("Accuracy: ");
 				System.out.println(evaluation.pctCorrect());
+				
+				System.out.println("WPrecision: ");
+				System.out.println(evaluation.weightedPrecision());
+				System.out.println("WRecall: ");
+				System.out.println(evaluation.weightedRecall());
+				System.out.println("WFM: ");
+				System.out.println(evaluation.weightedFMeasure());
+				
+				System.out.println("P S: ");
+				System.out.println(evaluation.precision(1));
+				System.out.println("R S: ");
+				System.out.println(evaluation.recall(1));
+				System.out.println("FM S: ");
+				System.out.println(evaluation.fMeasure(1));
+				
+				System.out.println("P H: ");
+				System.out.println(evaluation.precision(0));
+				System.out.println("R H: ");
+				System.out.println(evaluation.recall(0));
+				System.out.println("FM H: ");
+				System.out.println(evaluation.fMeasure(0));
 			}
 			else {
-				for(int j=0;j<balioak.length;j++) {
-					g=balioak[j];
-					SMO svm = sail.entrenatuSVM(trainAS, c, g, aukera);
-					Evaluation evaluation = sail.ebaluatu(testAS,trainAS,svm);
-					System.out.println("--->"+evaluation.pctCorrect());
+				for(int j=0;j<balioakG.length;j++) {
+					g=balioakG[j];
+					SMO svm = sail.sortuSVM(c, g, aukera);
+					evaluation = sail.ebaluatuCrossVal(trainAS,svm,3,new Random(1));
+					
+					//Gorde eredua
+					System.out.println("Gordetzen...");
+					SMO svmGorde = sail.entrenatuSVM(trainAS, c, g, aukera);
+					weka.core.SerializationHelper.write("src/ehes/resources/spam.model", svmGorde);
+					
+					System.out.println("Accuracy: ");
+					System.out.println(evaluation.pctCorrect());
+					
+					System.out.println("WPrecision: ");
+					System.out.println(evaluation.weightedPrecision());
+					System.out.println("WRecall: ");
+					System.out.println(evaluation.weightedRecall());
+					System.out.println("WFM: ");
+					System.out.println(evaluation.weightedFMeasure());
+					
+					System.out.println("P S: ");
+					System.out.println(evaluation.precision(1));
+					System.out.println("R S: ");
+					System.out.println(evaluation.recall(1));
+					System.out.println("FM S: ");
+					System.out.println(evaluation.fMeasure(1));
+					
+					System.out.println("P H: ");
+					System.out.println(evaluation.precision(0));
+					System.out.println("R H: ");
+					System.out.println(evaluation.recall(0));
+					System.out.println("FM H: ");
+					System.out.println(evaluation.fMeasure(0));
 				}
 			}
 		}

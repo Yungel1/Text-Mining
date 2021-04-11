@@ -22,7 +22,7 @@ public class AurreprozesamenduaTest {
 	
 	public Instances testaEgokitu(String pTest) throws Exception {
 		
-		FileWriter fw = new FileWriter(new File("src/ehes/testa.arff"));
+		FileWriter fw = new FileWriter(new File("src/ehes/resources/testa.arff"));
 		PrintWriter pw = new PrintWriter(fw);
 		
 		pw.println("@relation mail.data");
@@ -43,11 +43,11 @@ public class AurreprozesamenduaTest {
         Instances test = source.getDataSet();
         test.setClassIndex(0);
         
-		DataSource source2 = new DataSource("src/ehes/header.arff");
+		DataSource source2 = new DataSource("src/ehes//resources/header.arff");
         Instances header = source2.getDataSet();
         header.setClassIndex(0);
         
-        Instances dicTest = this.testaEgokitu("src/ehes/dictionary.txt", test);
+        Instances dicTest = this.testaEgokitu("src/ehes/resources/dictionary.txt", test);
         Instances egoTest = this.egokitu(header, dicTest);
         
         return egoTest;
@@ -72,7 +72,6 @@ public class AurreprozesamenduaTest {
 		ArrayList<Integer> ind = new ArrayList<Integer>();
 		ArrayList<Attribute> list = Collections.list(train.enumerateAttributes());
 		list.add(train.classAttribute());
-		
 		if(!test.equalHeaders(train)) {
 			for(int i=0;i<test.numAttributes();i++) {
 				if(list.contains(test.attribute(i))) {

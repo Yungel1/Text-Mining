@@ -95,7 +95,8 @@ public class Aurreprozesamendua {
 		File f = new File(path);
 		StringToWordVector filter = new StringToWordVector();
 		filter.setDictionaryFileToSaveTo(f);
-		filter.setWordsToKeep(10000);
+		filter.setWordsToKeep(100000);
+		filter.setTFTransform(true);
 		filter.setIDFTransform(true);
 		filter.setAttributeNamePrefix("#");
 
