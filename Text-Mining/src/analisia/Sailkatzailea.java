@@ -104,7 +104,7 @@ public class Sailkatzailea {
 		return emaitza;
 	}*/
 	
-	public SMO entrenatuSVM(Instances data, double c, double gamma, int aukera) throws Exception {
+	public SMO entrenatuSVM(Instances data, double c, double gammaExp, int aukera) throws Exception {
 		
 		
 		SMO svm = new SMO();
@@ -115,11 +115,17 @@ public class Sailkatzailea {
 			svm.setKernel(kernel);
 			
 		}
-		else {
+		else if(aukera==2){
 			System.out.println("---> RBF Kernela");
-			System.out.println("---> Gamma = "+gamma);
+			System.out.println("---> Gamma = "+gammaExp);
 			RBFKernel kernel = new RBFKernel();
-			kernel.setGamma(gamma);
+			kernel.setGamma(gammaExp);
+			svm.setKernel(kernel);
+		}else {
+			System.out.println("---> Kernel polinomikoa");
+			System.out.println("---> Exponent = "+gammaExp);
+			PolyKernel kernel = new PolyKernel();
+			kernel.setExponent(gammaExp);
 			svm.setKernel(kernel);
 		}
 		System.out.println("---> C = "+c);
@@ -131,7 +137,7 @@ public class Sailkatzailea {
 		
 	}
 	
-	public SMO sortuSVM(double c, double gamma, int aukera) throws Exception {
+	public SMO sortuSVM(double c, double gammaExp, int aukera) throws Exception {
 		
 		
 		SMO svm = new SMO();
@@ -142,11 +148,17 @@ public class Sailkatzailea {
 			svm.setKernel(kernel);
 			
 		}
-		else {
+		else if(aukera==2){
 			System.out.println("---> RBF Kernela");
-			System.out.println("---> Gamma = "+gamma);
+			System.out.println("---> Gamma = "+gammaExp);
 			RBFKernel kernel = new RBFKernel();
-			kernel.setGamma(gamma);
+			kernel.setGamma(gammaExp);
+			svm.setKernel(kernel);
+		}else {
+			System.out.println("---> Kernel polinomikoa");
+			System.out.println("---> Exponent = "+gammaExp);
+			PolyKernel kernel = new PolyKernel();
+			kernel.setExponent(gammaExp);
 			svm.setKernel(kernel);
 		}
 		System.out.println("---> C = "+c);

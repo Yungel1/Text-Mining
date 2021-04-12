@@ -1,4 +1,5 @@
 package ehes;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,12 @@ public class Controller implements Initializable{
 
     @FXML
     private TextArea txtDetector;
+    
+    @FXML
+    private TextField txtSpam;
+
+    @FXML
+    private TextField txtHam;
 
     @FXML
     private Button btnANL;
@@ -28,6 +35,9 @@ public class Controller implements Initializable{
 
     @FXML
     private FontAwesomeIconView iconExit;
+    
+    @FXML
+    private FontAwesomeIconView iconDelete;
 
     private Instances test;
     
@@ -36,17 +46,30 @@ public class Controller implements Initializable{
     
     @FXML
     void onClick(ActionEvent event) throws Exception {
-
+    	
     	AurreprozesamenduaTest ap = new AurreprozesamenduaTest();
     	
-    	String msg = txtDetector.getText(); //txtDetector --> String
-    	test = ap.testaEgokitu(msg);//Aurreprozesamendua.java egin eta hau erabiliz string --> .arff bihurtu eta FixedDictionary aplikatu
+    	String msg = txtDetector.getText().replaceAll("\n", System.getProperty("line.separator")); //txtDetector --> String
+    	FileWriter fw = new FileWriter("src/ehes/resources/proba.txt");
+    	fw.write(msg);
+    	fw.close();
+    	
+    	test = ap.testaEgokitu();//Aurreprozesamendua.java egin eta hau erabiliz string --> .arff bihurtu eta FixedDictionary aplikatu
     	iragarpenaEgin();
+    	
     }
 
     @FXML
     void onClickClose(MouseEvent event) {
     	System.exit(0);
+    }
+    
+    @FXML
+    void onClickDelete(MouseEvent event) {
+    	txtDetector.setText("");
+    	txtSpam.setText("");
+    	txtHam.setText("");
+    	txtResult.setText("");
     }
     
     private void iragarpenaEgin() throws Exception {

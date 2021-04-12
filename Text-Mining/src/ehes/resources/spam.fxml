@@ -34,34 +34,39 @@
                   <Font name="Abyssinica SIL" size="43.0" />
                </font>
             </TextField>
-            <Label layoutX="531.0" layoutY="291.0" text="CLASSIFIER INFORMATION">
+            <Label layoutX="566.0" layoutY="291.0" text="ADVANCED RESULTS">
                <font>
                   <Font name="Abyssinica SIL" size="25.0" />
                </font>
             </Label>
-            <TextField alignment="CENTER" editable="false" layoutX="717.0" layoutY="358.0" prefHeight="26.0" prefWidth="74.0">
+            <TextField fx:id="txtSpam" alignment="CENTER" editable="false" layoutX="706.0" layoutY="380.0" prefHeight="42.0" prefWidth="101.0">
                <font>
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="585.0" layoutY="366.0" text="ACCURACY">
+            <Label layoutX="617.0" layoutY="388.0" text="SPAM">
                <font>
                   <Font name="Abyssinica SIL" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="618.0" layoutY="436.0" text="ETC">
+            <Label layoutX="621.0" layoutY="458.0" text="HAM">
                <font>
                   <Font name="Abyssinica SIL" size="19.0" />
                </font>
             </Label>
-            <TextField alignment="CENTER" editable="false" layoutX="717.0" layoutY="428.0" prefHeight="26.0" prefWidth="74.0">
+            <TextField fx:id="txtHam" alignment="CENTER" editable="false" layoutX="706.0" layoutY="450.0" prefHeight="42.0" prefWidth="101.0">
                <font>
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
             </TextField>
             <FontAwesomeIconView fx:id="iconExit" glyphName="TIMES" layoutX="876.0" layoutY="39.0" onMouseClicked="#onClickClose" size="30" />
+            <FontAwesomeIconView fx:id="iconDelete" glyphName="TRASH" layoutX="491.0" layoutY="104.0" onMouseClicked="#onClickDelete" size="30" wrappingWidth="23.571428298950195" />
+            <Label layoutX="631.0" layoutY="336.0" text="CONFIDENCE">
+               <font>
+                  <Font name="Abyssinica SIL" size="19.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>
 </VBox>
- 

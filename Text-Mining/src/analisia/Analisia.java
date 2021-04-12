@@ -328,7 +328,7 @@ public class Analisia {
 		trainAS.setClassIndex(0);
 		
 		double[] balioakC = new double[] {1.0};
-		double[] balioakG = new double[] {1.0};
+		double[] balioakGE = new double[] {1.0};
 		double c;
 		double g;
 		
@@ -337,6 +337,7 @@ public class Analisia {
 		System.out.println("Aukeratu Kernela: ");
 		System.out.println("1. Linear");
 		System.out.println("2. RBF");
+		System.out.println("3. Polynomial");
 		
 		int aukera = sc.nextInt();
 		
@@ -373,15 +374,15 @@ public class Analisia {
 				System.out.println(evaluation.fMeasure(0));
 			}
 			else {
-				for(int j=0;j<balioakG.length;j++) {
-					g=balioakG[j];
+				for(int j=0;j<balioakGE.length;j++) {
+					g=balioakGE[j];
 					SMO svm = sail.sortuSVM(c, g, aukera);
 					evaluation = sail.ebaluatuCrossVal(trainAS,svm,3,new Random(1));
 					
 					//Gorde eredua
-					System.out.println("Gordetzen...");
+					/*System.out.println("Gordetzen...");
 					SMO svmGorde = sail.entrenatuSVM(trainAS, c, g, aukera);
-					weka.core.SerializationHelper.write("src/ehes/resources/spam.model", svmGorde);
+					weka.core.SerializationHelper.write("src/ehes/resources/spam.model", svmGorde);*/
 					
 					System.out.println("Accuracy: ");
 					System.out.println(evaluation.pctCorrect());

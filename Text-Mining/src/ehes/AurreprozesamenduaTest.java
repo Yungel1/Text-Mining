@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 import analisia.Aurreprozesamendua;
 import analisia.Sailkatzailea;
@@ -20,10 +21,22 @@ public class AurreprozesamenduaTest {
 	
 	
 	
-	public Instances testaEgokitu(String pTest) throws Exception {
+	public Instances testaEgokitu() throws Exception {
 		
+		Scanner myReader;
+		String pTest="";
+    	
+    	File f = new File("src/ehes/resources/proba.txt");
+    	
 		FileWriter fw = new FileWriter(new File("src/ehes/resources/testa.arff"));
 		PrintWriter pw = new PrintWriter(fw);
+		
+    	myReader = new Scanner(f);
+        while (myReader.hasNextLine()) {
+          String data = myReader.nextLine();
+          data=data.replaceAll("'", " ");
+          pTest=pTest.concat(data);
+        }
 		
 		pw.println("@relation mail.data");
 		pw.println("@attribute class {'ham','spam'}");
@@ -34,7 +47,7 @@ public class AurreprozesamenduaTest {
 		
 		pw.close();
 		
-		return this.bukEgokitu("src/ehes/testa.arff");
+		return this.bukEgokitu("src/ehes/resources/testa.arff");
 	}
 	
 	private Instances bukEgokitu(String pPath) throws Exception {
