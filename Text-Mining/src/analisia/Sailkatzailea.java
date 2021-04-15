@@ -108,6 +108,7 @@ public class Sailkatzailea {
 		
 		
 		SMO svm = new SMO();
+		svm.setBuildCalibrationModels(true);
 		System.out.println("#####Entrenamendua#####");
 		if(aukera==1) {
 			System.out.println("---> Kernel lineala");
@@ -141,6 +142,7 @@ public class Sailkatzailea {
 		
 		
 		SMO svm = new SMO();
+		svm.setBuildCalibrationModels(true);
 		System.out.println("#####Entrenamendua#####");
 		if(aukera==1) {
 			System.out.println("---> Kernel lineala");

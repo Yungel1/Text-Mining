@@ -380,9 +380,9 @@ public class Analisia {
 					evaluation = sail.ebaluatuCrossVal(trainAS,svm,3,new Random(1));
 					
 					//Gorde eredua
-					/*System.out.println("Gordetzen...");
+					System.out.println("Gordetzen...");
 					SMO svmGorde = sail.entrenatuSVM(trainAS, c, g, aukera);
-					weka.core.SerializationHelper.write("src/ehes/resources/spam.model", svmGorde);*/
+					weka.core.SerializationHelper.write("src/ehes/resources/spam.model", svmGorde);
 					
 					System.out.println("Accuracy: ");
 					System.out.println(evaluation.pctCorrect());
