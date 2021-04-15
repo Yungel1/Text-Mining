@@ -74,10 +74,19 @@ public class Controller implements Initializable{
     
     private void iragarpenaEgin() throws Exception {
     	
-    	 cls = (Classifier) weka.core.SerializationHelper.read("src/ehes/resources/spam.model");
+    	cls = (Classifier) weka.core.SerializationHelper.read("src/ehes/resources/spam.model");
          
-         double pred = cls.classifyInstance(test.instance(0));
-         txtResult.setText(test.classAttribute().value((int) pred).toUpperCase());
+        double pred = cls.classifyInstance(test.instance(0));
+        double[] predictionDistribution = cls.distributionForInstance(test.instance(0));
+         
+        txtResult.setText(test.classAttribute().value((int) pred).toUpperCase());
+        
+        String hamD = String.format("%.2f",predictionDistribution[0]*100);
+        String spamD = String.format("%.2f",predictionDistribution[1]*100);
+         
+        txtHam.setText("%"+hamD);
+        txtSpam.setText("%"+spamD);
+
          
     }
 
