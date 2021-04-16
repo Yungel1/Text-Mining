@@ -24,28 +24,53 @@ import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemovePercentage;
 
+
+/**
+ * Analisiak eta probak egiteko klasea
+ * @version 1.0, 16/04/2021
+ * @author Adrián Sánchez, Mikel Idoyaga, Ander Eiros
+
+
+ */
 public class Analisia {
 	
 	private Instances data;
 	
 	private SMO smo;
-	
+	/**
+	 * data atributua lortu
+	 * @return Instantziak
+	 */
 	public Instances getData() {
 		return data;
 	}
-
+	/**
+	 * Instantziak data atributuan sartu
+	 * @param data Instantziak
+	 */
 	public void setData(Instances data) {
 		this.data = data;
 	}
-
+	/**
+	 * smo atributua lortu
+	 * @return SMO sailkatzailea
+	 */
 	public SMO getSmo() {
 		return smo;
 	}
-
+	/**
+	 * SMO sailkatzailea smo atributuan sartu
+	 * @param smo SMO sailkatzailea
+	 */
 	public void setSmo(SMO smo) {
 		this.smo = smo;
 	}
-
+	/**
+	 * Emandako path-etik instantziak lortu
+	 * @param dataPath String motako parametroa, .arff-aren path-a
+	 * @return Intantziak
+	 * @throws Exception
+	 */
 	private Instances instantziakKargatu(String dataPath) throws Exception {
 		
 		DataSource source = new DataSource(dataPath);
@@ -53,7 +78,12 @@ public class Analisia {
         data.setClassIndex(0);
         return data;
 	}
-	
+	/**
+	 * BOW eta TF-IDF-rekin lortutako ebaluazio emaitzen imprimaketa, ebaluzio ez-zintzoa erabiliz. 
+	 * Erakutsiko diren metrikak: Accuracy, Weighted-Precision, Weighted-Recall, Weighted-FMeasure, SPAM Precision, SPAM Recall,
+	 * SPAM FMeasure, HAM Precision, HAM Recall, HAM FMeasure
+	 * @throws Exception
+	 */
 	private void bowtfRS() throws Exception {
 		
 		Aurreprozesamendua pro = new Aurreprozesamendua();
@@ -121,7 +151,12 @@ public class Analisia {
 		System.out.println(eval1.fMeasure(0));
 		
 	}
-	
+	/**
+	 * BOW eta TF-IDF-rekin lortutako ebaluazio emaitzen imprimaketa, 5 Hold-Out erabiliz. 
+	 * Erakutsiko diren metrikak: Accuracy, Weighted-Precision, Weighted-Recall, Weighted-FMeasure, SPAM Precision, SPAM Recall,
+	 * SPAM FMeasure, HAM Precision, HAM Recall, HAM FMeasure
+	 * @throws Exception
+	 */
 	private void bowtf() throws Exception {
 		
 		Aurreprozesamendua pro = new Aurreprozesamendua();
@@ -237,7 +272,13 @@ public class Analisia {
 		System.out.println("FM HAM: ");
 		sail.calculateSD(fmHArray);
 	}
-	
+	/**
+	 * AttributeSelection ebaluatzen da 3-Fold Cross Validation erabiliz. Hauek dira parametroak AttributeSelection-ean:
+	 * Ebaluatzailea (aldagarria),  atributu kopurua (aldagarria), Ranker
+	 * Erakutsiko diren metrikak: Accuracy, Weighted-Precision, Weighted-Recall, Weighted-FMeasure, SPAM Precision, SPAM Recall,
+	 * SPAM FMeasure, HAM Precision, HAM Recall, HAM FMeasure
+	 * @throws Exception
+	 */
 	private void attSelFroga() throws Exception {
 		
 		Aurreprozesamendua pro = new Aurreprozesamendua();
@@ -255,7 +296,7 @@ public class Analisia {
 		
 		int[] attKopList = new int[2];
 		attKopList[0] = 5000;
-		attKopList[1] = 6000;
+		attKopList[1] = 5500;
 		/*attKopList[2] = 6000;
 		attKopList[3] = 8000;
 		attKopList[4] = 9000;
