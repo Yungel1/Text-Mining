@@ -16,6 +16,15 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
+
+/**
+ * Interfazea kontrolatzeko klasea
+ * @version 1.0, 16/04/2021
+ * @author Adrián Sánchez, Mikel Idoyaga, Ander Eiros
+
+
+ */
+
 public class Controller implements Initializable{
 
     @FXML
@@ -45,6 +54,11 @@ public class Controller implements Initializable{
     private Classifier cls;
     
     @FXML
+    /**
+     * Idatzitako textua analizatu ea Spam edo Ham den
+     * @param event analyze botoia sakatu
+     * @throws Exception
+     */
     void onClick(ActionEvent event) throws Exception {
     	
     	AurreprozesamenduaTest ap = new AurreprozesamenduaTest();
@@ -60,10 +74,17 @@ public class Controller implements Initializable{
     }
 
     @FXML
+    /**
+     * Aplikazioa itxi
+     * @param event gurutzea sakatu
+     */
     void onClickClose(MouseEvent event) {
     	System.exit(0);
     }
-    
+    /**
+     * Idatzitako textu guztiak ezabatu
+     * @param event zakarrontzian sakatu
+     */
     @FXML
     void onClickDelete(MouseEvent event) {
     	txtDetector.setText("");
@@ -71,6 +92,10 @@ public class Controller implements Initializable{
     	txtHam.setText("");
     	txtResult.setText("");
     }
+    /**
+     * modeloa erabili testua ea Spam edo Ham den iragartzeko
+     * @throws Exception 
+     */
     
     private void iragarpenaEgin() throws Exception {
     	
@@ -89,7 +114,11 @@ public class Controller implements Initializable{
 
          
     }
-
+    /**
+     * Interfazea abiarazi
+     * @param arg0
+     * @param arg1
+     */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		

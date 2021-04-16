@@ -7,6 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Interfazea eta controller-a abiarazteko main klasea
+ * @version 1.0, 16/04/2021
+ * @author Adrián Sánchez, Mikel Idoyaga, Ander Eiros
+
+
+ */
 public class Main extends Application{
 
 	Parent controllerUI;
@@ -14,6 +21,11 @@ public class Main extends Application{
 	Controller controller;
 	
 	@Override
+	/**
+	 * Leihoa bistaratu
+	 * @param primaryStage bistaratu nahi den leihoa
+	 * @throws Exception
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			
@@ -31,7 +43,11 @@ public class Main extends Application{
 		}
 		
 	}
-	
+	/**
+	 * Interfazea eta controller-a abiarazi
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		
 		launch(args);

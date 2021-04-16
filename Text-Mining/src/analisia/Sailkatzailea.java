@@ -15,6 +15,13 @@ import weka.core.Instances;
 import weka.core.Option;
 
 public class Sailkatzailea {
+	
+	/**
+	 * Erregresio logistikoko sailkatzailea entrenatu instantzia multzo batekin
+	 * @param train entrenatzeko erabiliko dituzun instantziak
+	 * @return sailkatzaile entrenatua itzuliko du
+	 * @throws Exception
+	 */
 
 	public Logistic logisticEntrenatu(Instances train) throws Exception {
 		
@@ -22,12 +29,29 @@ public class Sailkatzailea {
 		logCLS.buildClassifier(train);
 		return logCLS;
 	}
+	/**
+	 * Ebaluatzaile sortu
+	 * @param test zein instantziakin testeatuko den ebaluatzailea
+	 * @param train zein header erabili behar duen ebaluatzaileak
+	 * @param cls zein sailkatzaile ebaluatuko den
+	 * @return ebaluatzailea itzuliko du
+	 * @throws Exception
+	 */
 	
 	public Evaluation ebaluatu(Instances test, Instances train, Classifier cls) throws Exception {
 		Evaluation e = new Evaluation(train);
 		e.evaluateModel(cls, test);
 		return e;
 	}
+	/**
+	 * Ebaluatzailea sortu crossvalidation erabiliz
+	 * @param data zeitzuk intantziekin testeatu nahi
+	 * @param cls zein sailkatzaile ebaluatuko den
+	 * @param k k-crossvalidation egiteko
+	 * @param r erabili nahi den random-a
+	 * @return ebaluatzailea itzuliko du
+	 * @throws Exception
+	 */
 	
 	public Evaluation ebaluatuCrossVal(Instances data, Classifier cls, int k, Random r) throws Exception {
 		
@@ -36,6 +60,11 @@ public class Sailkatzailea {
 		return e;
 		
 	}
+	/**
+	 * Batazbestekoa eta desbiderazio tipikoa kalkulatzeko metodoa
+	 * @param numArray zein zenbaki multzoan(array) kalkulatu nahi den
+	 */
+	
 	public  void calculateSD(double numArray[])
     {
         double sum = 0.0;
@@ -103,6 +132,15 @@ public class Sailkatzailea {
 		
 		return emaitza;
 	}*/
+	/**
+	 * SVM sailkatzailea entrenatu
+	 * @param data sailkatzailea entrenatzeko instantziak
+	 * @param c zein c erabili nahi SVM parametro gisa
+	 * @param gammaExp zein gamma erabili nahi den SVM parametro gisa
+	 * @param aukera 1.aukera:kernel lineala, 2.aukera:RBF kernela eta 3.aukera:kernel polinomikoa
+	 * @return SVM sailkatzailea itzuliko du
+	 * @throws Exception
+	 */
 	
 	public SMO entrenatuSVM(Instances data, double c, double gammaExp, int aukera) throws Exception {
 		
@@ -137,6 +175,14 @@ public class Sailkatzailea {
 		return svm;
 		
 	}
+	/**
+	 * SVM salkatzailea sortu
+	 * @param c zein c erabili nahi SVM parametro gisa
+	 * @param gammaExp zein gamma erabili nahi den SVM parametro gisa
+	 * @param aukera 1.aukera:kernel lineala, 2.aukera:RBF kernela eta 3.aukera:kernel polinomikoa
+	 * @return SVM sailkatzailea itzuliko du
+	 * @throws Exception
+	 */
 	
 	public SMO sortuSVM(double c, double gammaExp, int aukera) throws Exception {
 		

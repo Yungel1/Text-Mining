@@ -351,7 +351,13 @@ public class Analisia {
 		}
 		
 	}
-	
+	/**
+	 * svm parametroak ebaluatzen diraa 3-Fold Cross Validation erabiliz.
+	 * C, gamma eta kernela izango dira ekortuko diren parametroak
+	 * Erakutsiko diren metrikak: Accuracy, Weighted-Precision, Weighted-Recall, Weighted-FMeasure, SPAM Precision, SPAM Recall,
+	 * SPAM FMeasure, HAM Precision, HAM Recall, HAM FMeasure
+	 * @throws Exception
+	 */
 	private void svmEkorketa() throws Exception {
 		
 		Aurreprozesamendua pro = new Aurreprozesamendua();
@@ -456,6 +462,13 @@ public class Analisia {
 		
 		
 	}
+	/**
+	 * 1 zenbakia satuz gero bowtf() metodori deitzen zaio
+	 * 2 zenbakia satuz gero attSelFroga() metodoari deitzen zaio
+	 * 3 zenbakia satuz gero svmEkorketa(); metodoari deitzen zaio
+	 * @param args
+	 * @throws Exception
+	 */
 
 	public static void main(String[] args) throws Exception {
 		
@@ -486,74 +499,7 @@ public class Analisia {
 			System.out.println("Txarto sartu duzu aukera");
 			System.exit(1);
 		}
-		/*
-		
-		Instances train = analisia.instantziakKargatu("/home/adrian/EHES/Proiektua/ReutersCorn-train.arff");
-		Instances test = analisia.instantziakKargatu("/home/adrian/EHES/Proiektua/ReutersCorn-test.arff");
-		
-		Aurreprozesamendua pro = new Aurreprozesamendua();
-		Sailkatzailea sail = new Sailkatzailea();
-
-		
-		Instances data = analisia.instantziakKargatu("/home/mikel/Desktop/Proiektua/mailDatuak.arff");
-		//Instances test = analisia.instantziakKargatu("/home/adrian/EHES/Proiektua/ReutersCorn-test.arff");
-		
-		for(int i=0;i<5;i++) {
-			Instances [] trainTest = pro.randomSplit(data, i);
-			Instances trainBektore = pro.errepresentazioBektoriala(trainTest[0],"/home/mikel/Desktop/Proiektua/dictionary");
-			Instances testBektore = pro.testaEgokitu("/home/mikel/Desktop/Proiektua/dictionary", trainTest[1]);	
-			//entrenamedu
-			Logistic lo = sail.logisticEntrenatu(trainBektore);
-			Evaluation eval= sail.ebaluatu(testBektore,trainBektore, lo);
-			System.out.println(eval.fMeasure(0));
-			numArray[i]=eval.fMeasure(0);
-		}
-		sail.calculateSD(numArray);
-		
-		for(int i=0;i<5;i++) {
-			Instances [] trainTest = pro.randomSplit(data, i);
-			Instances trainBektore = pro.errepresentazioBektorialaTF(trainTest[0],"/home/mikel/Desktop/Proiektua/dictionary");
-			Instances testBektore = pro.testaEgokitu("/home/mikel/Desktop/Proiektua/dictionary", trainTest[1]);	
-			//entrenamedu
-			Logistic lo = sail.logisticEntrenatu(trainBektore);
-			Evaluation eval= sail.ebaluatu(testBektore,trainBektore, lo);
-			System.out.println(eval.fMeasure(0));
-			numArray[i]=eval.fMeasure(0);
-		}
-		sail.calculateSD(numArray);
-
-
-		
-
-		
-		//MIKEL
-		//pro.arffFitxategia();
-		//ADRIÁN
-		//Instances trainBektore=pro.errepresentazioBektoriala(train, "/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff");
-		//System.out.println(trainBektore.numAttributes()+"##"+trainBektore.classIndex()+"##"+trainBektore.classAttribute().name());
-		//Instances trainASBektore = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 4000);
-		//System.out.println(trainASBektore.numAttributes()+"##"+trainASBektore.classIndex()+"##"+trainASBektore.classAttribute().name());
-		//Instances testEgokituta = pro.testaEgokitu("/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff", test);
-		//System.out.println(testEgokituta.numAttributes());
-		//Instances trainBektore=pro.errepresentazioBektoriala(train, "/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff");
-		System.out.println(trainBektore.numAttributes()+"##"+trainBektore.classIndex()+"##"+trainBektore.classAttribute().name());
-		Instances trainASBektore = pro.attributeSelection(trainBektore, new ClassifierAttributeEval(), 4000);
-		System.out.println(trainASBektore.numAttributes()+"##"+trainASBektore.classIndex()+"##"+trainASBektore.classAttribute().name());
-		Instances testEgokituta = pro.testaEgokitu("/home/adrian/EHES/Proiektua/ReutersCorn-trainBektore.arff", test);
-		System.out.println(testEgokituta.numAttributes());
-		
-		//ANDER
-		Sailkatzailea svm = new Sailkatzailea();
-		DataSource source = new DataSource(args[0]);
-		Instances data = source.getDataSet();
-		data.setClassIndex(data.numAttributes()-1);
-		double[] param = svm.ekortuSVM(data);
-		System.out.println(param[0]+" "+ param[1]);
-		SMO sailk = svm.entrenatuSVM(data, param[0], param[1]);
-		Evaluation e = svm.ebaluatuCrossVal(data, sailk, 10, new Random(1));
-		System.out.println(e.toSummaryString());
-		*/
-		
+				
 	}
 
 }

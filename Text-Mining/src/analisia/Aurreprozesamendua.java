@@ -22,7 +22,20 @@ import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.filters.unsupervised.instance.RemovePercentage;
 
+/**
+ * Datuak behar ditugun formatuan egokitzeko klasea
+ * @version 1.0, 16/04/2021
+ * @author Adrián Sánchez, Mikel Idoyaga, Ander Eiros
+
+
+ */
+
 public class Aurreprozesamendua {
+	
+	/**
+	 * Metodo honek nire ordenagailuko datuak arff fitxategi bilakatzen ditu
+	 * @throws IOException
+	 */
 	
 	public void arffFitxategia() throws IOException {
 		
@@ -40,6 +53,14 @@ public class Aurreprozesamendua {
 		pw.close();
 		
 	}
+	
+	
+	/**
+	 * Karpeta bateko .txt arff fitxategi batean sartu karpetaren direktorioren azken zatia klasearen izena izanda
+	 * @param pathData .txt guztiak dauden karpetaren direktoria
+	 * @param pw printwriter-a arff fitxategian idazketak gauzatzeko
+	 * @throws IOException
+	 */
 	
 	
 	public void textToArff(String pathData, PrintWriter pw ) throws IOException {
@@ -63,9 +84,14 @@ public class Aurreprozesamendua {
 		     
 		    }
 		}
-		//FileWriter fw = new FileWriter(new File(pPath));
-		//PrintWriter pw = new PrintWriter(fw);
 	}
+	/**
+	 * Bektorizatu gabeko instatziak BOW erabiliz bektorizatu
+	 * @param train beztorizatu nahi diren instantzia
+	 * @param path non gorde nahi duzun sortutato hiztegiaren path-a
+	 * @return bektorizatutako intantziak itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	public Instances errepresentazioBektoriala(Instances train, String path) throws Exception {
 		
@@ -89,6 +115,13 @@ public class Aurreprozesamendua {
     	return trainBektore;
 
 	}
+	/**
+	 * Bektorizatu gabeko instatziak TF-IDF erabiliz bektorizatu
+	 * @param train beztorizatu nahi diren instantzia
+	 * @param path non gorde nahi duzun sortutato hiztegiaren path-a
+	 * @return bektorizatutako intantziak itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	public Instances errepresentazioBektorialaTFIDF(Instances train, String path) throws Exception {
 		
@@ -114,6 +147,14 @@ public class Aurreprozesamendua {
 		return trainBektore;
 
 	}
+	/**
+	 * Atributuen hautapena klasearekiko egin eta intantziak atributu bakar horietara egokitu
+	 * @param data zeintzuk instantzia nahi dituzun egokitu
+	 * @param evaluator erabiliko den evaluator-a atributuak hautatzeko
+	 * @param attKop zenbat atributu kopuru hautatu nahi dituzun
+	 * @return instatziak atributu bakar horietara egokituta itzuliko du
+	 * @throws Exception
+	 */
 	
 	public Instances attributeSelection(Instances data,ASEvaluation evaluator,int attKop) throws Exception {
 		
@@ -130,6 +171,13 @@ public class Aurreprozesamendua {
 		
 		return insOrd;
 	}
+	/**
+	 * Test-eko instantziak train multzoarekin bateratu header berdina izateko
+	 * @param train entrenamendu multzorako erabili diren instantziak
+	 * @param test testeatzeko erabiliko diren instantziak
+	 * @return test-eko instantzia egokituak itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	public Instances egokitu(Instances train, Instances test) throws Exception {
 		
@@ -154,6 +202,13 @@ public class Aurreprozesamendua {
 		
 		return test;
 	}
+	/**
+	 * Nahi ez dituzun atributuak ezabatuko ditu header.etik
+	 * @param data zein instantzietako header aldatu nahi duzun
+	 * @param aukAtt mantendu nahi dituzun atributuen array-a
+	 * @return header-a egokituta 
+	 * @throws Exception
+	 */
 	
 	public Instances remove(Instances data,int[] aukAtt) throws Exception {
 		
@@ -169,6 +224,14 @@ public class Aurreprozesamendua {
 		
 	}
 	
+	/**
+	 * Testa egokituko du hiztegia erabilita; hau da, Test-a belktorizatuko du hiztegiaren arabera
+	 * @param path hiztegia dagoen direktorioa
+	 * @param test bektorizatu nahi diren instantziak
+	 * @return intantziak bektorizatuta itzuliko ditu
+	 * @throws Exception
+	 */
+	
 	public Instances testaEgokitu(String path,Instances test) throws Exception {//**HIZTEGI EGOKIA SARTU**
 		
 		FixedDictionaryStringToWordVector filter = new FixedDictionaryStringToWordVector();
@@ -179,6 +242,14 @@ public class Aurreprozesamendua {
     	
     	return testEgokituta;
 	}
+	
+	/**
+	 * Intantziakrandomizatu eta bi multzotan banatuko ditu bat %70 instatziekin eta bestea %30-arekin
+	 * @param data zeintzuk instantziak randomizatu eta banatu nahi dituzun
+	 * @param rand zein hasirekin randomizatu nahi duzun
+	 * @return array bat itzuliko non arrayeko lehenengo posiziona %70-eko izango duen eta bigarrenean %30-ekoa
+	 * @throws Exception
+	 */
 	
 	public Instances[] randomSplit(Instances data,int rand) throws Exception {
 		data.randomize(new Random(rand));

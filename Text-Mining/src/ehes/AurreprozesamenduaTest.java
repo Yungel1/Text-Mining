@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import analisia.Aurreprozesamendua;
 import analisia.Sailkatzailea;
+import weka.classifiers.Classifier;
+import weka.classifiers.evaluation.Evaluation;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -17,9 +19,21 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
 import weka.filters.unsupervised.attribute.Remove;
 
+/**
+ * Datuak behar ditugun formatuan egokitzeko klasea
+ * @version 1.0, 16/04/2021
+ * @author Adrián Sánchez, Mikel Idoyaga, Ander Eiros
+
+
+ */
+
 public class AurreprozesamenduaTest {
 	
-	
+	/**
+	 * Textu bat egokituko arff fitxategi bat eginez
+	 * @return arff fitxategiko intantziak itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	public Instances testaEgokitu() throws Exception {
 		
@@ -49,6 +63,12 @@ public class AurreprozesamenduaTest {
 		
 		return this.bukEgokitu("src/ehes/resources/testa.arff");
 	}
+	/**
+	 * arff fitxategia egokituko du header eta hiztegi bat erabiliz
+	 * @param pPath arff fitxategiaren direktorioa
+	 * @return intantziak egokituta itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	private Instances bukEgokitu(String pPath) throws Exception {
 		
@@ -56,7 +76,7 @@ public class AurreprozesamenduaTest {
         Instances test = source.getDataSet();
         test.setClassIndex(0);
         
-		DataSource source2 = new DataSource("src/ehes//resources/header.arff");
+		DataSource source2 = new DataSource("src/ehes/resources/header.arff");
         Instances header = source2.getDataSet();
         header.setClassIndex(0);
         
@@ -67,6 +87,13 @@ public class AurreprozesamenduaTest {
         
         
 	}
+	/**
+	 * Instantziak egokituko ditu hiztegi jakin baterako
+	 * @param path hiztegiaren direktorioa
+	 * @param test egokitu nahi diren instantziak
+	 * @return instantziak egokituta hiztegiarekiko
+	 * @throws Exception
+	 */
 	
 	public Instances testaEgokitu(String path,Instances test) throws Exception {//**HIZTEGI EGOKIA SARTU**
 		
@@ -78,6 +105,13 @@ public class AurreprozesamenduaTest {
     	
     	return testEgokituta;
 	}
+	/**
+	 * test instantziak egokitu header jakin baterako
+	 * @param train erabili nahi den header-aren instantziak
+	 * @param test egokitu nahi diren instantziak
+	 * @return testeko instantziak header-arekiko egokituta itzuliko ditu
+	 * @throws Exception
+	 */
 	
 	
 	public Instances egokitu(Instances train, Instances test) throws Exception {
@@ -102,6 +136,13 @@ public class AurreprozesamenduaTest {
 		
 		return test;
 	}
+	/**
+	 * Nahi ez dituzun atributuak ezabatuko ditu header.etik
+	 * @param data zein instantzietako header aldatu nahi duzun
+	 * @param aukAtt mantendu nahi dituzun atributuen array-a
+	 * @return header-a egokituta 
+	 * @throws Exception
+	 */
 	
 	public Instances remove(Instances data,int[] aukAtt) throws Exception {
 		
