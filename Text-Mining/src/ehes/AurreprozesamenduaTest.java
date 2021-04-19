@@ -30,8 +30,8 @@ import weka.filters.unsupervised.attribute.Remove;
 public class AurreprozesamenduaTest {
 	
 	/**
-	 * Textu bat egokituko arff fitxategi bat eginez
-	 * @return arff fitxategiko intantziak itzuliko ditu
+	 * Testu bat egokituko arff fitxategi bat eginez
+	 * @return Arff fitxategiko intantziak itzuliko ditu
 	 * @throws Exception
 	 */
 	
@@ -64,9 +64,9 @@ public class AurreprozesamenduaTest {
 		return this.bukEgokitu("src/ehes/resources/testa.arff");
 	}
 	/**
-	 * arff fitxategia egokituko du header eta hiztegi bat erabiliz
-	 * @param pPath arff fitxategiaren direktorioa
-	 * @return intantziak egokituta itzuliko ditu
+	 * Arff fitxategia egokituko du header eta hiztegi bat erabiliz
+	 * @param pPath Arff fitxategiaren path
+	 * @return Intantziak egokituta itzuliko ditu
 	 * @throws Exception
 	 */
 	
@@ -89,9 +89,9 @@ public class AurreprozesamenduaTest {
 	}
 	/**
 	 * Instantziak egokituko ditu hiztegi jakin baterako
-	 * @param path hiztegiaren direktorioa
-	 * @param test egokitu nahi diren instantziak
-	 * @return instantziak egokituta hiztegiarekiko
+	 * @param path Hiztegiaren direktorioa
+	 * @param test Egokitu nahi diren instantziak
+	 * @return Instantziak egokituta hiztegiarekiko
 	 * @throws Exception
 	 */
 	
@@ -106,10 +106,10 @@ public class AurreprozesamenduaTest {
     	return testEgokituta;
 	}
 	/**
-	 * test instantziak egokitu header jakin baterako
-	 * @param train erabili nahi den header-aren instantziak
-	 * @param test egokitu nahi diren instantziak
-	 * @return testeko instantziak header-arekiko egokituta itzuliko ditu
+	 * Test instantziak egokitu beste multzo jakin baterako
+	 * @param train Zetzuk insntantziekin egokitu nahi den
+	 * @param test Egokitu nahi diren instantziak
+	 * @return Testeko instantziak beste multzoarekiko egokituta itzuliko du
 	 * @throws Exception
 	 */
 	
@@ -137,10 +137,10 @@ public class AurreprozesamenduaTest {
 		return test;
 	}
 	/**
-	 * Nahi ez dituzun atributuak ezabatuko ditu header.etik
-	 * @param data zein instantzietako header aldatu nahi duzun
-	 * @param aukAtt mantendu nahi dituzun atributuen array-a
-	 * @return header-a egokituta 
+	 * Hautatutako atributuak mantendu
+	 * @param data Zein instantzietan kendu nahi diren atributuak
+	 * @param aukAtt Mantendu nahi diten atributuen array-a
+	 * @return Instantziak atributuak kenduta
 	 * @throws Exception
 	 */
 	

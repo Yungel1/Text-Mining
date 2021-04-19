@@ -33,7 +33,7 @@ import weka.filters.unsupervised.instance.RemovePercentage;
 public class Aurreprozesamendua {
 	
 	/**
-	 * Metodo honek nire ordenagailuko datuak arff fitxategi bilakatzen ditu
+	 * Datuak arff fitxategi bilakatzen ditu. Arff fitxategiaren path-a jarrrita eta Ham eta Spam fitxategien path-a jarrita
 	 * @throws IOException
 	 */
 	
@@ -56,9 +56,9 @@ public class Aurreprozesamendua {
 	
 	
 	/**
-	 * Karpeta bateko .txt arff fitxategi batean sartu karpetaren direktorioren azken zatia klasearen izena izanda
-	 * @param pathData .txt guztiak dauden karpetaren direktoria
-	 * @param pw printwriter-a arff fitxategian idazketak gauzatzeko
+	 * Karpeta bateko .txt arff fitxategi batean sartu karpetaren path-aren azken zatia klasearen izena izanda
+	 * @param pathData .txt-ak dauden karpetaren path-a
+	 * @param pw PrintWriter-a arff fitxategian idazketak gauzatzeko
 	 * @throws IOException
 	 */
 	
@@ -87,9 +87,9 @@ public class Aurreprozesamendua {
 	}
 	/**
 	 * Bektorizatu gabeko instatziak BOW erabiliz bektorizatu
-	 * @param train beztorizatu nahi diren instantzia
-	 * @param path non gorde nahi duzun sortutato hiztegiaren path-a
-	 * @return bektorizatutako intantziak itzuliko ditu
+	 * @param train Bektorizatu nahi diren instantzia
+	 * @param path Gorde nahi den sortutato hiztegiaren path-a
+	 * @return Bektorizatutako intantziak itzuliko ditu
 	 * @throws Exception
 	 */
 	
@@ -117,8 +117,8 @@ public class Aurreprozesamendua {
 	}
 	/**
 	 * Bektorizatu gabeko instatziak TF-IDF erabiliz bektorizatu
-	 * @param train beztorizatu nahi diren instantzia
-	 * @param path non gorde nahi duzun sortutato hiztegiaren path-a
+	 * @param train Bektorizatu nahi diren instantzia
+	 * @param path Gorde nahi den sortutato hiztegiaren path-a
 	 * @return bektorizatutako intantziak itzuliko ditu
 	 * @throws Exception
 	 */
@@ -149,10 +149,10 @@ public class Aurreprozesamendua {
 	}
 	/**
 	 * Atributuen hautapena klasearekiko egin eta intantziak atributu bakar horietara egokitu
-	 * @param data zeintzuk instantzia nahi dituzun egokitu
-	 * @param evaluator erabiliko den evaluator-a atributuak hautatzeko
-	 * @param attKop zenbat atributu kopuru hautatu nahi dituzun
-	 * @return instatziak atributu bakar horietara egokituta itzuliko du
+	 * @param data Egokitu nahi diren instantziak
+	 * @param evaluator Erabiliko den evaluator-a atributuak hautatzeko
+	 * @param attKop Hautatutako atributu kopurua
+	 * @return Instatziak atributu bakar horietara egokituta itzuliko du
 	 * @throws Exception
 	 */
 	
@@ -172,10 +172,10 @@ public class Aurreprozesamendua {
 		return insOrd;
 	}
 	/**
-	 * Test-eko instantziak train multzoarekin bateratu header berdina izateko
-	 * @param train entrenamendu multzorako erabili diren instantziak
-	 * @param test testeatzeko erabiliko diren instantziak
-	 * @return test-eko instantzia egokituak itzuliko ditu
+	 * Test-eko instantziak train multzoarekin bateratu
+	 * @param train Entrenamendu multzorako erabili diren instantziak
+	 * @param test Testeatzeko erabiliko diren instantziak
+	 * @return Test-eko instantzia egokituak itzuliko ditu
 	 * @throws Exception
 	 */
 	
@@ -203,10 +203,10 @@ public class Aurreprozesamendua {
 		return test;
 	}
 	/**
-	 * Nahi ez dituzun atributuak ezabatuko ditu header.etik
-	 * @param data zein instantzietako header aldatu nahi duzun
-	 * @param aukAtt mantendu nahi dituzun atributuen array-a
-	 * @return header-a egokituta 
+	 * Hautatutako atributuak mantendu
+	 * @param data Zein instantzietan kendu nahi diren atributuak
+	 * @param aukAtt Mantendu nahi diten atributuen array-a
+	 * @return Instantziak atributuak kenduta
 	 * @throws Exception
 	 */
 	
@@ -225,10 +225,10 @@ public class Aurreprozesamendua {
 	}
 	
 	/**
-	 * Testa egokituko du hiztegia erabilita; hau da, Test-a belktorizatuko du hiztegiaren arabera
-	 * @param path hiztegia dagoen direktorioa
-	 * @param test bektorizatu nahi diren instantziak
-	 * @return intantziak bektorizatuta itzuliko ditu
+	 * Testa egokituko du hiztegia erabilita; hau da, Test-a bektorizatuko du hiztegiaren arabera
+	 * @param path Hiztegia dagoen Path-a
+	 * @param test Bektorizatu nahi diren instantziak
+	 * @return Intantziak bektorizatuta itzuliko ditu
 	 * @throws Exception
 	 */
 	
@@ -244,10 +244,10 @@ public class Aurreprozesamendua {
 	}
 	
 	/**
-	 * Intantziakrandomizatu eta bi multzotan banatuko ditu bat %70 instatziekin eta bestea %30-arekin
-	 * @param data zeintzuk instantziak randomizatu eta banatu nahi dituzun
-	 * @param rand zein hasirekin randomizatu nahi duzun
-	 * @return array bat itzuliko non arrayeko lehenengo posiziona %70-eko izango duen eta bigarrenean %30-ekoa
+	 * Intantziak randomizatu eta bi multzotan banatuko ditu bat %70 instatziekin eta bestea %30-arekin
+	 * @param data Ramdomizatu eta banadu nahi diren instantziak
+	 * @param rand Ramdomizatzeko erabiliko den hazia
+	 * @return Array bat itzuliko non arrayeko lehenengo posiziona %70-eko izango duen eta bigarrenean %30-ekoa
 	 * @throws Exception
 	 */
 	

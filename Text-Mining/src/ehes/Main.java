@@ -23,7 +23,7 @@ public class Main extends Application{
 	@Override
 	/**
 	 * Leihoa bistaratu
-	 * @param primaryStage bistaratu nahi den leihoa
+	 * @param primaryStage Bistaratu nahi den leihoa
 	 * @throws Exception
 	 */
 	public void start(Stage primaryStage) throws Exception {

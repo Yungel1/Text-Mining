@@ -55,8 +55,8 @@ public class Controller implements Initializable{
     
     @FXML
     /**
-     * Idatzitako textua analizatu ea Spam edo Ham den
-     * @param event analyze botoia sakatu
+     * Idatzitako testua analizatu ea Spam edo Ham den
+     * @param event Analyze botoia sakatu
      * @throws Exception
      */
     void onClick(ActionEvent event) throws Exception {
@@ -76,14 +76,14 @@ public class Controller implements Initializable{
     @FXML
     /**
      * Aplikazioa itxi
-     * @param event gurutzea sakatu
+     * @param event Gurutzea sakatu
      */
     void onClickClose(MouseEvent event) {
     	System.exit(0);
     }
     /**
-     * Idatzitako textu guztiak ezabatu
-     * @param event zakarrontzian sakatu
+     * Idatzitako testu guztiak ezabatu
+     * @param event Zakarrontzian sakatu
      */
     @FXML
     void onClickDelete(MouseEvent event) {
@@ -93,7 +93,7 @@ public class Controller implements Initializable{
     	txtResult.setText("");
     }
     /**
-     * modeloa erabili testua ea Spam edo Ham den iragartzeko
+     * Modeloa erabili testua ea Spam edo Ham den iragartzeko
      * @throws Exception 
      */
     

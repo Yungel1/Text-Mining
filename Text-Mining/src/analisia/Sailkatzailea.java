@@ -18,8 +18,8 @@ public class Sailkatzailea {
 	
 	/**
 	 * Erregresio logistikoko sailkatzailea entrenatu instantzia multzo batekin
-	 * @param train entrenatzeko erabiliko dituzun instantziak
-	 * @return sailkatzaile entrenatua itzuliko du
+	 * @param train Entrenatzeko erabiliko dituzun instantziak
+	 * @return Sailkatzaile entrenatua itzuliko du
 	 * @throws Exception
 	 */
 
@@ -31,10 +31,10 @@ public class Sailkatzailea {
 	}
 	/**
 	 * Ebaluatzaile sortu
-	 * @param test zein instantziakin testeatuko den ebaluatzailea
-	 * @param train zein header erabili behar duen ebaluatzaileak
-	 * @param cls zein sailkatzaile ebaluatuko den
-	 * @return ebaluatzailea itzuliko du
+	 * @param test Zein instantziakin testeatuko den ebaluatzailea
+	 * @param train Zein header erabili behar duen ebaluatzaileak
+	 * @param cls Zein sailkatzaile ebaluatuko den
+	 * @return Ebaluatzailea itzuliko du
 	 * @throws Exception
 	 */
 	
@@ -45,11 +45,11 @@ public class Sailkatzailea {
 	}
 	/**
 	 * Ebaluatzailea sortu crossvalidation erabiliz
-	 * @param data zeitzuk intantziekin testeatu nahi
-	 * @param cls zein sailkatzaile ebaluatuko den
+	 * @param data Zeitzuk intantziekin testeatu nahi den
+	 * @param cls Zein sailkatzaile ebaluatuko den
 	 * @param k k-crossvalidation egiteko
-	 * @param r erabili nahi den random-a
-	 * @return ebaluatzailea itzuliko du
+	 * @param r Erabili nahi den random-a
+	 * @return Ebaluatzailea itzuliko du
 	 * @throws Exception
 	 */
 	
@@ -62,7 +62,7 @@ public class Sailkatzailea {
 	}
 	/**
 	 * Batazbestekoa eta desbiderazio tipikoa kalkulatzeko metodoa
-	 * @param numArray zein zenbaki multzoan(array) kalkulatu nahi den
+	 * @param numArray Zein zenbaki multzoan(array) kalkulatu nahi den
 	 */
 	
 	public  void calculateSD(double numArray[])
@@ -134,9 +134,9 @@ public class Sailkatzailea {
 	}*/
 	/**
 	 * SVM sailkatzailea entrenatu
-	 * @param data sailkatzailea entrenatzeko instantziak
-	 * @param c zein c erabili nahi SVM parametro gisa
-	 * @param gammaExp zein gamma erabili nahi den SVM parametro gisa
+	 * @param data Sailkatzailea entrenatzeko instantziak
+	 * @param c Zein c erabili nahi SVM parametro gisa
+	 * @param gammaExp Zein gamma erabili nahi den SVM parametro gisa
 	 * @param aukera 1.aukera:kernel lineala, 2.aukera:RBF kernela eta 3.aukera:kernel polinomikoa
 	 * @return SVM sailkatzailea itzuliko du
 	 * @throws Exception
@@ -177,8 +177,8 @@ public class Sailkatzailea {
 	}
 	/**
 	 * SVM salkatzailea sortu
-	 * @param c zein c erabili nahi SVM parametro gisa
-	 * @param gammaExp zein gamma erabili nahi den SVM parametro gisa
+	 * @param c Zein c erabili nahi SVM parametro gisa
+	 * @param gammaExp Zein gamma erabili nahi den SVM parametro gisa
 	 * @param aukera 1.aukera:kernel lineala, 2.aukera:RBF kernela eta 3.aukera:kernel polinomikoa
 	 * @return SVM sailkatzailea itzuliko du
 	 * @throws Exception

@@ -38,7 +38,7 @@ public class Analisia {
 	
 	private SMO smo;
 	/**
-	 * data atributua lortu
+	 * Data atributua lortu
 	 * @return Instantziak
 	 */
 	public Instances getData() {
@@ -52,7 +52,7 @@ public class Analisia {
 		this.data = data;
 	}
 	/**
-	 * smo atributua lortu
+	 * SMO atributua lortu
 	 * @return SMO sailkatzailea
 	 */
 	public SMO getSmo() {
@@ -352,7 +352,7 @@ public class Analisia {
 		
 	}
 	/**
-	 * svm parametroak ebaluatzen diraa 3-Fold Cross Validation erabiliz.
+	 * SVM parametroak ebaluatzen diraa 3-Fold Cross Validation erabiliz.
 	 * C, gamma eta kernela izango dira ekortuko diren parametroak
 	 * Erakutsiko diren metrikak: Accuracy, Weighted-Precision, Weighted-Recall, Weighted-FMeasure, SPAM Precision, SPAM Recall,
 	 * SPAM FMeasure, HAM Precision, HAM Recall, HAM FMeasure
@@ -466,7 +466,7 @@ public class Analisia {
 	 * 1 zenbakia satuz gero bowtf() metodori deitzen zaio
 	 * 2 zenbakia satuz gero attSelFroga() metodoari deitzen zaio
 	 * 3 zenbakia satuz gero svmEkorketa(); metodoari deitzen zaio
-	 * @param args
+	 * @param args Ez da beharrezkoa
 	 * @throws Exception
 	 */
 
